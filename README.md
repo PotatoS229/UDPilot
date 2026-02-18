@@ -11,6 +11,8 @@ My long-standing dream is to develop a **corporate-scale cybersecurity tool** th
 I'd be happy if you'd be interested in following its progress. I hope you find my work useful!
 
 ---
+🌐 If anyone wants to participate in the project or offer a good job, please write to me in Telegram @PotatoS229
+---
 
 ⭐ *If you're interested in this project, consider starring the repository to stay updated!*
 
