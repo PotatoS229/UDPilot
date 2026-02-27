@@ -84,3 +84,52 @@ flowchart TD
     M --> N["udp2raw-server<br>(Пересылка на целевой порт)"]
     N --> O["Целевой UDP-сервис<br>(например, игровой сервер)<br>ПОРТ: 7777"]
 ```
+
+```mermaid
+flowchart TB
+    subgraph "CLIENT SIDE"
+        A[Пользовательское<br>приложение<br>например, OpenVPN клиент] -->|UDP трафик| B[udp2raw-client<br>локальный порт]
+    end
+
+    subgraph "udp2raw CLIENT PROCESS"
+        B --> C[main.cpp<br>Точка входа, парсинг]
+        C --> D[tunnel.cpp<br>Управление туннелем]
+        D --> E[raw_socket.cpp<br>Формирование TCP/ICMP пакетов]
+        E --> F[encrypt.cpp & auth.cpp<br>Шифрование и подпись]
+        F --> G[anti_replay.cpp<br>Защита от повторов]
+    end
+
+    subgraph "NETWORK"
+        H[Интернет<br>Замаскированный трафик<br>выглядит как обычный TCP]
+    end
+
+    subgraph "udp2raw SERVER PROCESS"
+        I[raw_socket.cpp<br>Разбор входящих пакетов]
+        I --> J[auth.cpp & anti_replay.cpp<br>Проверка подписи и повторов]
+        J --> K[encrypt.cpp<br>Расшифровка]
+        K --> L[tunnel.cpp<br>Восстановление UDP датаграмм]
+        L --> M[main.cpp<br>Маршрутизация]
+    end
+
+    subgraph "SERVER SIDE"
+        M --> N[UDP сервис<br>например, OpenVPN сервер]
+    end
+
+    subgraph "ВСПОМОГАТЕЛЬНЫЕ МОДУЛИ"
+        O[libev<br>Асинхронный ввод-вывод]
+        P[lib/md5.cpp, sha1.cpp, aes.cpp<br>Криптография]
+        Q[common.cpp<br>Логи, утилиты]
+        R[fifo.cpp<br>Управление через FIFO]
+    end
+
+    B --> H
+    H --> I
+    
+    O -.-> C
+    O -.-> D
+    P -.-> F
+    P -.-> K
+    Q -.-> C
+    Q -.-> D
+    R -.-> C
+```
