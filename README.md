@@ -1,7 +1,7 @@
 # 🚀 UDPilot — Твой личный VPN-пилот
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![GitHub stars](https://img.shields.io/github/stars/PotatoS229/udpilot?style=social)](https://github.com/PotatoS229/udpilot/stargazers)
+[![GitHub stars](https://img.shields.io/github/stars/PotatoS229/UDPilot?style=social)](https://github.com/PotatoS229/UDPilot)
 [![Telegram](https://img.shields.io/badge/Contact-@PotatoS229-blue)](https://t.me/PotatoS229)
 
 <div align="center">
