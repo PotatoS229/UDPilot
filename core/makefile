@@ -1,13 +1,15 @@
 CC = g++
-all: ./src/main
+all: ../release_project/main
 
-./src/main: ./src/main.o
-	${CC} -o ./src/main ./src/main.o
+../release_project/main: ../release_project/main.o
+	mkdir -p ../release_project
+	${CC} -o $@ $^
 
-./src/main.o: ./src/main.cpp
-	${CC} -c ./src/main.cpp -o ./src/main.o
+../release_project/main.o: src/main.cpp
+	mkdir -p ../release_project
+	${CC} -c $< -o $@
 
 clean:
-	rm -f ./src/main ./src/main.o
+	rm -f ../release_project/main ../release_project/main.o
 
 .PHONY: all clean

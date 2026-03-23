@@ -15,15 +15,22 @@ const MenuPage = () => {
                 <h2>📋 Меню возможностей</h2>
                 <div className="menu-grid">
 
-                    <MenuButton index={1} name={"🛠 Свои сервера"}></MenuButton>
+                    <Link 
+                        to="/menu" 
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <MenuButton index={1} name={"⚙️ Панель управления"}></MenuButton>
+                    </Link>
 
-                    <MenuButton index={2} name={"🚀 UDP-тюнинг"}></MenuButton>
+                    <MenuButton index={2} name={"🛠 Свои сервера"}></MenuButton>
 
-                    <MenuButton index={3} name={"📊 Визуализация в реальном времени"}></MenuButton>
+                    <MenuButton index={3} name={"🚀 UDP-тюнинг"}></MenuButton>
 
-                    <MenuButton index={4} name={"📋 Логи"}></MenuButton>
+                    <MenuButton index={4} name={"📊 Визуализация в реальном времени"}></MenuButton>
 
-                    <MenuButton index={5} name={"🔧 Настройки"}></MenuButton>
+                    <MenuButton index={5} name={"📋 Логи"}></MenuButton>
+
+                    <MenuButton index={6} name={"🔧 Настройки"}></MenuButton>
                     
                     <a 
                         href="https://t.me/@PotatoS229" 
@@ -40,8 +47,14 @@ const MenuPage = () => {
                         rel="noopener noreferrer"
                         style={{ textDecoration: 'none' }}
                     >
-                        <MenuButton index={7} name={"⭐ Поставить звезду на GitHub"} />
+                        <MenuButton index={8} name={"⭐ Поставить звезду на GitHub"} />
                     </a>
+                    <Link 
+                        to="/todo" 
+                        style={{ textDecoration: 'none' }}
+                    >
+                        <MenuButton index={9} name={"📋ToDo list"}></MenuButton>
+                    </Link>
                 </div>
             </aside>
 

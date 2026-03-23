@@ -3,22 +3,15 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
-// для работы со временем
-// #include <chrono>
 // для работы с потоками
 #include <thread>
-// #include "../include/network/networkAttack.h"
-// #include "../include/network/networkInfo.h"
-// #include "../include/network/stressTest.h"
-// #include "../include/network/configNetwork.h"
-// using namespace networkAtack;
-// using namespace networkInfo;
-// using namespace stressTest;
-// using namespace configNetwork;
-// пространство имен std
 using namespace std;
 using namespace std::chrono_literals;
 using namespace std::this_thread;
+
+//Для запуска браузера
+#include <cstdlib>
+#include <string>
 
 // объявляем функцию для выбора действия
 void choosingOption();
@@ -29,22 +22,7 @@ int main() {;
     const string RESET = "\033[0m";
     const string WHITE = "\033[97m";
     const string BLACK = "\033[40m";
-    
-    // создаем переменную timeout используя (chrono) в которой будет храниться интервал
-    // auto timeout = 1s;
-                                      
-    // cout << BLACK << WHITE_TEXT << "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    // sleep_for(timeout);
-    // cout << BLACK << WHITE_TEXT << "⣿⣿⣿⣿⣿⣿⣿⣿ Hello my friend, this program is only ⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    // sleep_for(timeout);               
-    // cout << BLACK << WHITE_TEXT << "⣿⣿⣿⣿⣿ intended for legal pentesting, so I am not ⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    // sleep_for(timeout);               
-    // cout << BLACK << WHITE_TEXT << "⣿⣿⣿⣿⣿⣿ responsible for your activities. You are ⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    // sleep_for(timeout);               
-    // cout << BLACK << WHITE_TEXT << "⣿⣿⣿⣿⣿⣿⣿⣿⣿ responsible for your own decisions ⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    // sleep_for(timeout);
-    // cout << BLACK << WHITE_TEXT << "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    // sleep_for(timeout);
+
     cout << BLACK << WHITE <<  "⣿⣿⣿⣿⣿⡿⠿⠿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
     cout << BLACK << WHITE <<  "⣿⣿⣿⣿⣿⣿⠿⠒⠒⠒⠲⢶⣤⣄⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
     cout << BLACK << WHITE <<  "⣿⣿⣿⣿⡟⠁⠀⠀⠀⠀⠀⣀⠈⠻⣿⣦⡀⠀⠀⠙⠋⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
@@ -63,6 +41,18 @@ int main() {;
     // Запускаем Функцию выбора действий
     launchOptions();
     return 0;
+}
+
+void openBrowser(const std::string& url) {
+    #ifdef _WIN32
+        std::string command = "start " + url;
+    #elif __APPLE__
+        std::string command = "open " + url;
+    #else
+        std::string command = "xdg-open " + url;
+    #endif
+    
+    system(command.c_str());
 }
 
 //Функция, где запускать программу TUI или GUI
@@ -92,9 +82,9 @@ void launchOptions(){
                 choosingOption();
             case 2:
                 cout << "Запускаем сервера и GUI" << endl;
+                openBrowser("http://localhost:5173/menu");
             default:
-                cout << "Invalid option! Please choose again." << endl;
-                sleep_for(2s);
+                cout << "Ошибка" << endl;
                 break;
         }
     }
@@ -115,7 +105,7 @@ void choosingOption() {
         
         cout << left
              << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
-             << "\033[101m|NETWORK|\033[0m" << endl
+             << "\033[101m|UDPilot|\033[0m" << endl
              << "\033[102m|   1   |\033[0m" << endl
              << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
              << "Please choose one option (0 to exit): ";
@@ -144,14 +134,16 @@ void choosingOption() {
                     #endif
                     cout << left
                         << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
-                        << "\033[101m|NETWORK_ATACK|\033[0m" << "   "
-                        << "\033[101m|NETWORK_INFO|\033[0m" << "   "
-                        << "\033[101m|STRESS_TEST|\033[0m" << "   "
-                        << "\033[101m|CONFIG_NETWORK|\033[0m" << "   " << endl
+                        << "\033[101m|Свои сервера |\033[0m" << "   "
+                        << "\033[101m|UDP-тюнинг |\033[0m" << "   "
+                        << "\033[101m|Логи |\033[0m" << "   "
+                        << "\033[101m|Телеграм |\033[0m" << "   "
+                        << "\033[101m|GitHub |\033[0m" << "   " << endl
                         << "\033[102m|      1      |\033[0m" << "   "
-                        << "\033[102m|     2      |\033[0m" << "   "
-                        << "\033[102m|     3     |\033[0m" << "   "
-                        << "\033[102m|      4       |\033[0m" << "   " << endl
+                        << "\033[102m|     2     |\033[0m" << "   "
+                        << "\033[102m|  3  |\033[0m" << "   "
+                        << "\033[102m|    4    |\033[0m" << "   "
+                        << "\033[102m|   5   |\033[0m" << "   " << endl
                         << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
                         << "Please choose one option (0 to go back): ";
                     
@@ -167,40 +159,12 @@ void choosingOption() {
                         case 0:
                             return; // Возврат в главное меню
                         case 1: {
-                            // cout << "\n";
-                            // versionAtack myAtack;
-                            // myAtack.display();
-                            // cout << "\nPress Enter to continue...";
-                            // cin.ignore();
-                            // cin.get();
-                            // break;
                         }
                         case 2: {
-                            // cout << "\n";
-                            // informate info;
-                            // info.networkInfo();
-                            // cout << "\nPress Enter to continue...";
-                            // cin.ignore();
-                            // cin.get();
-                            // break;
                         }
                         case 3:{
-                            // cout << "\n";
-                            // testing test;
-                            // test.testNetwork();
-                            // cout << "\nPress Enter to continue...";
-                            // cin.ignore();
-                            // cin.get();
-                            // break;
                         }
                         case 4:{
-                            // cout << "\n";
-                            // configuration config;
-                            // config.configure();
-                            // cout << "\nPress Enter to continue...";
-                            // cin.ignore();
-                            // cin.get();
-                            // break;
                         }
                         default:
                             cout << "Invalid option! Please choose again." << endl;
