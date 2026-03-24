@@ -1,6 +1,5 @@
 import './TodoList.css'
 import {Link} from 'react-router-dom'
-// import {Redux} from 'redux'
 import MenuButton from '../../components/MenuButton/MenuButton.tsx'
 
 const TodoList = () => {
@@ -63,7 +62,7 @@ const TodoList = () => {
 
                 {/* основной контент */}
                 <div className="content-preview">
-
+                    
                 </div>
 
             </div>
@@ -80,3 +79,4 @@ const TodoList = () => {
     )
 }
 export default TodoList;
+
