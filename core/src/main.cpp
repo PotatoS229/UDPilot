@@ -165,6 +165,10 @@ void choosingOption() {
                         case 3:{
                         }
                         case 4:{
+                            openBrowser("https://t.me/@PotatoS229");
+                        }
+                        case 5:{
+                            openBrowser("https://github.com/PotatoS229/UDPilot?tab=readme-ov-file");
                         }
                         default:
                             cout << "Invalid option! Please choose again." << endl;
