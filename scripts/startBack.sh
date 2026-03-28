@@ -1,1 +1,0 @@
-cd ../backend && (test -d node_modules || npm install) && npm run start

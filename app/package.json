@@ -1,0 +1,13 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "",
+  "license": "MIT",
+  "author": "Maksaliev Artemiy",
+  "type": "commonjs",
+  "main": "main.js",
+  "scripts": {
+    "start":"cd ./web && npm run dev & cd ./backend && npm run electron",
+    "electron": "npx electron ./src/main.js"
+  }
+}

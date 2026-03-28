@@ -3,42 +3,45 @@
 #include <iostream>
 #include <iomanip>
 #include <vector>
-// для работы с потоками
 #include <thread>
+#include <cstdlib>
+#include <string>
+#include <limits>
+
 using namespace std;
 using namespace std::chrono_literals;
 using namespace std::this_thread;
 
-//Для запуска браузера
-#include <cstdlib>
-#include <string>
-
-// объявляем функцию для выбора действия
+// Function declarations
 void choosingOption();
 void launchOptions();
+void openBrowser(const std::string& url);
+void startTUIMode();
+void startGUIMode();
 
-int main() {;
+int main() {
     const string WHITE_TEXT = "\033[37m";
     const string RESET = "\033[0m";
     const string WHITE = "\033[97m";
     const string BLACK = "\033[40m";
 
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⣿⡿⠿⠿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⣿⣿⠿⠒⠒⠒⠲⢶⣤⣄⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⡟⠁⠀⠀⠀⠀⠀⣀⠈⠻⣿⣦⡀⠀⠀⠙⠋⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⡇⠀⠀⠀⠀⠔⠺⣿⠷⠀⢹⣿⣿⡧⠀⠀⠀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⠇⠀⠀⠀⢸⠀⠀⣽⠀⡆⠀⣿⡿⠃⢀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣷⣤⣤⡀⠀⠀⠁⠷⠷⠎⠀⣸⡿⠇⠀⣸⣷⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;   
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠊⠉⠀⣄⣴⣿⣿⣿⣿⣿⣿"<< BLACK << "     U D P i l o t   " << WHITE <<"⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl; 
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠐⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⣿⣿⡀⠀⠀⠠⢀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣶⣤⣀⠀⠀⠀⠀⠀⠀⠀⣤⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    cout << BLACK << WHITE <<  "⣿⣿⣿⣿⣿⣿⣷⣶⣦⣤⣤⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    // Display ASCII art
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⣿⡿⠿⠿⠿⠿⠿⠿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⣿⣿⠿⠒⠒⠒⠲⢶⣤⣄⠀⠀⠈⠛⢿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⡟⠁⠀⠀⠀⠀⠀⣀⠈⠻⣿⣦⡀⠀⠀⠙⠋⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⡇⠀⠀⠀⠀⠔⠺⣿⠷⠀⢹⣿⣿⡧⠀⠀⠀⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⠇⠀⠀⠀⢸⠀⠀⣽⠀⡆⠀⣿⡿⠃⢀⠀⠀⠘⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    cout << BLACK << WHITE << "⣿⣿⣿⣷⣤⣤⡀⠀⠀⠁⠷⠷⠎⠀⣸⡿⠇⠀⣸⣷⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;   
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⣿⣿⡟⠀⠀⠀⠀⠀⠀⠊⠉⠀⣄⣴⣿⣿⣿⣿⣿⣿" << BLACK << "     U D P i l o t   " << WHITE << "⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl; 
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⣿⣿⠁⠀⠀⠀⠀⠀⠀⠀⠐⠈⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⣿⣿⡀⠀⠀⠠⢀⠀⠀⠀⠀⢠⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⣿⣿⠀⠀⠀⠀⠀⠀⠀⠀⣶⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    cout << BLACK << WHITE << "⣿⣿⣿⣶⣤⣀⠀⠀⠀⠀⠀⠀⠀⣤⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
+    cout << BLACK << WHITE << "⣿⣿⣿⣿⣿⣿⣷⣶⣦⣤⣤⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
     sleep_for(3s);
     
-    // Запускаем Функцию выбора действий
+    // Launch options menu
     launchOptions();
     return 0;
 }
@@ -55,134 +58,127 @@ void openBrowser(const std::string& url) {
     system(command.c_str());
 }
 
-//Функция, где запускать программу TUI или GUI
-void launchOptions(){
-    while(true){
-        // Очистка экрана (работает на большинстве систем)
-        #ifdef _WIN32
-            system("cls");
-        #else
-            system("clear");
-        #endif
-        int option;
-        cout << left
-            << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
-            << "\033[101m|💻Запуск TUI|           |🌐Запуск GUI|\033[0m" << endl
-            << "\033[102m|      1     |           |     2      |\033[0m" << endl
-            << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl;
-        if (!(cin >> option)) {
-                cin.clear(); // очищаем флаги ошибок
-                cin.ignore(numeric_limits<streamsize>::max(), '\n'); // игнорируем неправильный ввод
-                cout << "Invalid input! Please enter a number." << endl;
-                sleep_for(2s);
-                continue;
-        }
-        switch (option) {
-            case 1:
-                choosingOption();
-            case 2:
-                cout << "Запускаем сервера и GUI" << endl;
-                openBrowser("http://localhost:5173/menu");
-            default:
-                cout << "Ошибка" << endl;
-                break;
-        }
-    }
+void startTUIMode() {
+    cout << "Starting TUI mode..." << endl;
+    // Add your TUI mode implementation here
+    // This could be a console-based interface for server management
+    sleep_for(2s);
+    choosingOption(); // Return to main menu after TUI mode
 }
 
-
-// Функция для выбора действия
-void choosingOption() {
-    int option;
+void startGUIMode() {
+    cout << "Starting GUI mode..." << endl;
     
-    while (true) {
-        // Очистка экрана (работает на большинстве систем)
+    // Navigate to the app directory and start Electron
+    #ifdef _WIN32
+        system("cd ../app && npm run start");
+    #else
+        system("cd ../app && npm run start");
+    #endif
+    
+    sleep_for(2s);
+}
+
+void launchOptions() {
+    while(true) {
+        // Clear screen
         #ifdef _WIN32
             system("cls");
         #else
             system("clear");
         #endif
         
+        int option;
         cout << left
              << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
-             << "\033[101m|UDPilot|\033[0m" << endl
-             << "\033[102m|   1   |\033[0m" << endl
+             << "\033[101m|💻 Launch TUI |           |🌐 Launch GUI |\033[0m" << endl
+             << "\033[102m|      1       |           |      2       |\033[0m" << endl
              << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
-             << "Please choose one option (0 to exit): ";
+             << "Choose option (0 to exit): ";
         
         if (!(cin >> option)) {
-            cin.clear(); // очищаем флаги ошибок
-            cin.ignore(numeric_limits<streamsize>::max(), '\n'); // игнорируем неправильный ввод
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid input! Please enter a number." << endl;
             sleep_for(2s);
             continue;
         }
         
         switch (option) {
-            case 0: {
+            case 0:
                 cout << "Exiting program..." << endl;
                 sleep_for(1s);
                 return;
-            }
-            case 1: {
-                int variant;
-                while (true) {
-                    #ifdef _WIN32
-                        system("cls");
-                    #else
-                        system("clear");
-                    #endif
-                    cout << left
-                        << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
-                        << "\033[101m|Свои сервера |\033[0m" << "   "
-                        << "\033[101m|UDP-тюнинг |\033[0m" << "   "
-                        << "\033[101m|Логи |\033[0m" << "   "
-                        << "\033[101m|Телеграм |\033[0m" << "   "
-                        << "\033[101m|GitHub |\033[0m" << "   " << endl
-                        << "\033[102m|      1      |\033[0m" << "   "
-                        << "\033[102m|     2     |\033[0m" << "   "
-                        << "\033[102m|  3  |\033[0m" << "   "
-                        << "\033[102m|    4    |\033[0m" << "   "
-                        << "\033[102m|   5   |\033[0m" << "   " << endl
-                        << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
-                        << "Please choose one option (0 to go back): ";
-                    
-                    if (!(cin >> variant)) {
-                        cin.clear();
-                        cin.ignore(numeric_limits<streamsize>::max(), '\n');
-                        cout << "Invalid input! Please enter a number." << endl;
-                        sleep_for(2s);
-                        continue;
-                    }
-                    
-                    switch (variant) {
-                        case 0:
-                            return; // Возврат в главное меню
-                        case 1: {
-                        }
-                        case 2: {
-                        }
-                        case 3:{
-                        }
-                        case 4:{
-                            openBrowser("https://t.me/@PotatoS229");
-                        }
-                        case 5:{
-                            openBrowser("https://github.com/PotatoS229/UDPilot?tab=readme-ov-file");
-                        }
-                        default:
-                            cout << "Invalid option! Please choose again." << endl;
-                            sleep_for(2s);
-                            break;
-                    }
-                }
+            case 1:
+                startTUIMode();
                 break;
-            }
-            default: {
+            case 2:
+                startGUIMode();
+                break;
+            default:
+                cout << "Invalid option! Please choose 0, 1, or 2." << endl;
+                sleep_for(2s);
+                break;
+        }
+    }
+}
+
+void choosingOption() {
+    int option;
+    
+    while (true) {
+        // Clear screen
+        #ifdef _WIN32
+            system("cls");
+        #else
+            system("clear");
+        #endif
+        
+        cout << left
+             << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
+             << "\033[101m|                         UDPilot - Main Menu                           |\033[0m" << endl
+             << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
+             << "\033[102m| 1 | Custom Servers |\033[0m" << endl
+             << "\033[102m| 2 | UDP Tuning    |\033[0m" << endl
+             << "\033[102m| 3 | Logs          |\033[0m" << endl
+             << "\033[102m| 4 | Telegram      |\033[0m" << endl
+             << "\033[102m| 5 | GitHub        |\033[0m" << endl
+             << "\033[93m----------------------------------------------------------------------------------------------\033[0m" << endl
+             << "Choose option (0 to go back): ";
+        
+        if (!(cin >> option)) {
+            cin.clear();
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            cout << "Invalid input! Please enter a number." << endl;
+            sleep_for(2s);
+            continue;
+        }
+        
+        switch (option) {
+            case 0:
+                return; // Return to launch options
+            case 1:
+                cout << "Custom Servers feature coming soon..." << endl;
+                sleep_for(2s);
+                break;
+            case 2:
+                cout << "UDP Tuning feature coming soon..." << endl;
+                sleep_for(2s);
+                break;
+            case 3:
+                cout << "Logs feature coming soon..." << endl;
+                sleep_for(2s);
+                break;
+            case 4:
+                openBrowser("https://t.me/@PotatoS229");
+                break;
+            case 5:
+                openBrowser("https://github.com/PotatoS229/UDPilot");
+                break;
+            default:
                 cout << "Invalid option! Please choose again." << endl;
                 sleep_for(2s);
                 break;
-            }
         }
     }
 }

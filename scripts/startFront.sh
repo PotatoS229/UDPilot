@@ -1,1 +1,0 @@
-cd ../web && (test -d node_modules || npm install) && npm run dev
