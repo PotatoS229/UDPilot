@@ -1,10 +1,12 @@
 import './Menu.css';
 import {Link} from 'react-router-dom'
 import MenuButton from '../../components/MenuButton/MenuButton.tsx'
+import ThemeToggle from '../../components/themes/themes.tsx'
 
 const MenuPage = () => {
     return (
     <div className="dashboard-card">
+        <ThemeToggle></ThemeToggle>
         <div className="welcome-header">
             <h1>⚙️ Панель управления</h1>
             <p>UDPilot • выберите модуль для настройки</p>
