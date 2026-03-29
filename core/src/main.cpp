@@ -19,6 +19,9 @@ void openBrowser(const std::string& url);
 void startTUIMode();
 void startGUIMode();
 
+//My function
+#include "./include/UDP_TUNNEL/udpTunnel.h"
+
 int main() {
     const string WHITE_TEXT = "\033[37m";
     const string RESET = "\033[0m";
@@ -162,10 +165,14 @@ void choosingOption() {
                 sleep_for(2s);
                 break;
             case 2:
+                udpTunnel::udpTunnelStruct udps;
+                udps.startUdpTunnel();
+                cout << "\nPress Enter to continue...";
+                cin.ignore();
+                cin.get();
                 cout << "UDP Tuning feature coming soon..." << endl;
-                sleep_for(2s);
-                break;
-            case 3:
+                this_thread::sleep_for(2s);
+                        case 3:
                 cout << "Logs feature coming soon..." << endl;
                 sleep_for(2s);
                 break;
