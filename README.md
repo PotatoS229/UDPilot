@@ -1,4 +1,3 @@
-```markdown
 # 🚀 UDPilot — Твой личный VPN-пилот
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -113,7 +112,6 @@ graph LR
 
 - **Telegram**: [@PotatoS229](https://t.me/PotatoS229) (автор)
 - **GitHub Issues**: баги и фичи
-- **Email**: `artemy.maksaliev@udpilot.dev» (добавьте при публикации)
 
 ---
 
@@ -128,4 +126,3 @@ graph LR
   <p><i>С уважением, Артемий Максалиев</i></p>
   <p>🔥 <b>UDPilot — ваш личный пилот в мире сетей</b> 🔥</p>
 </div>
-```
