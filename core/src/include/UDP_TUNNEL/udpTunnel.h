@@ -6,7 +6,6 @@
 
 namespace udpTunnel {
     struct udpTunnelStruct {
-        std::vector<std::string> udpTunnelData{};
         void startUdpTunnel();  
     };
 }

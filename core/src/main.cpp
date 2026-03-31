@@ -1,16 +1,14 @@
 #include "./include/common.h"
 
+#include <chrono>
 #include <iostream>
-#include <iomanip>
-#include <vector>
 #include <thread>
 #include <cstdlib>
 #include <string>
 #include <limits>
+#include <chrono>
 
 using namespace std;
-using namespace std::chrono_literals;
-using namespace std::this_thread;
 
 // Function declarations
 void choosingOption();
@@ -42,7 +40,7 @@ int main() {
     cout << BLACK << WHITE << "⣿⣿⣿⣿⠟⠁⠀⠀⠀⠀⠀⠀⠀⠀⠻⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
     cout << BLACK << WHITE << "⣿⣿⣿⣶⣤⣀⠀⠀⠀⠀⠀⠀⠀⣤⣴⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
     cout << BLACK << WHITE << "⣿⣿⣿⣿⣿⣿⣷⣶⣦⣤⣤⣴⣾⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿⣿" << RESET << endl;
-    sleep_for(3s);
+    this_thread::sleep_for(std::chrono::seconds(3));
     
     // Launch options menu
     launchOptions();
@@ -65,7 +63,7 @@ void startTUIMode() {
     cout << "Starting TUI mode..." << endl;
     // Add your TUI mode implementation here
     // This could be a console-based interface for server management
-    sleep_for(2s);
+    this_thread::sleep_for(std::chrono::seconds(2));
     choosingOption(); // Return to main menu after TUI mode
 }
 
@@ -79,7 +77,7 @@ void startGUIMode() {
         system("cd ../app && npm run start");
     #endif
     
-    sleep_for(2s);
+    this_thread::sleep_for(std::chrono::seconds(2));
 }
 
 void launchOptions() {
@@ -103,14 +101,14 @@ void launchOptions() {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid input! Please enter a number." << endl;
-            sleep_for(2s);
+           this_thread::sleep_for(std::chrono::seconds(2));
             continue;
         }
         
         switch (option) {
             case 0:
                 cout << "Exiting program..." << endl;
-                sleep_for(1s);
+                this_thread::sleep_for(std::chrono::seconds(1));
                 return;
             case 1:
                 startTUIMode();
@@ -120,7 +118,7 @@ void launchOptions() {
                 break;
             default:
                 cout << "Invalid option! Please choose 0, 1, or 2." << endl;
-                sleep_for(2s);
+                this_thread::sleep_for(std::chrono::seconds(2));
                 break;
         }
     }
@@ -153,39 +151,46 @@ void choosingOption() {
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid input! Please enter a number." << endl;
-            sleep_for(2s);
+            this_thread::sleep_for(std::chrono::seconds(2));
             continue;
         }
         
         switch (option) {
             case 0:
                 return; // Return to launch options
-            case 1:
+            case 1:{
                 cout << "Custom Servers feature coming soon..." << endl;
-                sleep_for(2s);
+                this_thread::sleep_for(std::chrono::seconds(2));
                 break;
-            case 2:
+            }
+            case 2:{
                 udpTunnel::udpTunnelStruct udps;
                 udps.startUdpTunnel();
                 cout << "\nPress Enter to continue...";
                 cin.ignore();
                 cin.get();
                 cout << "UDP Tuning feature coming soon..." << endl;
-                this_thread::sleep_for(2s);
-                        case 3:
-                cout << "Logs feature coming soon..." << endl;
-                sleep_for(2s);
+                this_thread::sleep_for(std::chrono::seconds(2));
                 break;
-            case 4:
+            }
+            case 3: {
+                cout << "Logs feature coming soon..." << endl;
+                this_thread::sleep_for(std::chrono::seconds(2));
+                break;
+            }
+            case 4: {
                 openBrowser("https://t.me/@PotatoS229");
                 break;
-            case 5:
+            }
+            case 5: {
                 openBrowser("https://github.com/PotatoS229/UDPilot");
                 break;
-            default:
+            }
+            default: {
                 cout << "Invalid option! Please choose again." << endl;
-                sleep_for(2s);
+                this_thread::sleep_for(std::chrono::seconds(2));
                 break;
+            }
         }
     }
 }
