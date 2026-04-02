@@ -19,6 +19,7 @@ void startGUIMode();
 
 //My function
 #include "./include/UDP_TUNNEL/udpTunnel.h"
+#include "./include/ArpSpoof/ArpSpoof.h"
 
 int main() {
     const string WHITE_TEXT = "\033[37m";
@@ -159,13 +160,28 @@ void choosingOption() {
             case 0:
                 return; // Return to launch options
             case 1:{
-                cout << "Custom Servers feature coming soon..." << endl;
+                udpTunnel::udpTunnelStruct udps;
+                udps.startUdpTunnel();
+                cout << "\nPress Enter to continue...";
+                cin.ignore();
+                cin.get();
+                cout << "UDP Tuning feature coming soon..." << endl;
                 this_thread::sleep_for(std::chrono::seconds(2));
                 break;
             }
             case 2:{
-                udpTunnel::udpTunnelStruct udps;
-                udps.startUdpTunnel();
+                ArpSpoof::ArpSpoofStruct udps;
+                char* args[] = { 
+                const_cast<char*>("program"), 
+                const_cast<char*>("-i"), 
+                const_cast<char*>("192.168.1.79"),
+                const_cast<char*>("-c"), 
+                const_cast<char*>("192.168.1.79"),
+                const_cast<char*>("-g"), 
+                const_cast<char*>("192.168.1.1")
+            };
+            int argc = 7;
+            udps.startArpSpoof(argc, args);
                 cout << "\nPress Enter to continue...";
                 cin.ignore();
                 cin.get();
