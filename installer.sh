@@ -3,6 +3,8 @@
 cd /
 cd /home/${USER}
 
+git clone https://github.com/wangyu-/udp2raw
+
 git clone https://github.com/seladb/PcapPlusPlus
 cd ./PcapPlusPlus
 
@@ -13,6 +15,7 @@ if [ -f /etc/os-release ]; then
         debian|ubuntu|linuxmint|pop|elementary)
             echo "Debian-based system (Debian/Ubuntu/Mint etc.)"
             sudo apt update
+            sudo apt install libev-dev
             sudo apt-get install libpcap-dev
             cmake -S . -B build
             cd build
@@ -22,6 +25,7 @@ if [ -f /etc/os-release ]; then
         arch|manjaro|endeavouros)
             echo "Arch-based system (Arch/Manjaro etc.)"
             sudo pacman -Syu --noconfirm
+            sudo pacman -S libev
             sudo pacman -S --noconfirm git base-devel cmake libpcap
             cmake -S . -B build
             cd build

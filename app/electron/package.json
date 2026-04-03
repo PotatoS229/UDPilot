@@ -1,12 +1,12 @@
 {
-  "name": "backend",
+  "name": "electron",
   "version": "1.0.0",
   "description": "",
   "license": "MIT",
   "author": "Maksaliev Artemiy",
-  "type": "module",
-  "main": "server.js",
+  "type": "commonjs",
+  "main": "main.js",
   "scripts": {
-    "backend":"node ./src/server.js"
+    "electron":"npx electron ./src/main.js"
   }
 }

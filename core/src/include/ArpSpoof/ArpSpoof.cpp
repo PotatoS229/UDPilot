@@ -54,7 +54,7 @@ namespace ArpSpoof {
         pcpp::EthLayer ethLayer(macSrc, macDst, static_cast<uint16_t>(PCPP_ETHERTYPE_ARP));
         pcpp::ArpLayer arpLayer(pcpp::ArpRequest(pDevice->getMacAddress(), pDevice->getIPv4Address(), ipAddr));
 
-        arpRequest.addLayer(&ethLayer);
+        arpRequest.addLayer(&ethLayer); 
         arpRequest.addLayer(&arpLayer);
         arpRequest.computeCalculateFields();
 

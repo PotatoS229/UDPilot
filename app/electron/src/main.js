@@ -1,6 +1,10 @@
 const { app, BrowserWindow, ipcMain, nativeTheme } = require('electron/main');
 const path = require('node:path');
 
+app.commandLine.appendSwitch('ignore-gpu-blocklist');
+app.commandLine.appendSwitch('disable-gpu-sandbox');
+app.commandLine.appendSwitch('disable-vaapi');
+
 function createWindow() {
   const win = new BrowserWindow({
     width: 1000,
@@ -11,9 +15,6 @@ function createWindow() {
       contextIsolation: true
     }
   });
-
-  // Загружаем собранный HTML файл React приложения
-//   win.loadFile(path.join(__dirname, '../../web/dist/index.html'));
   
   // Для разработки - можно загружать с dev-сервера
   win.loadURL('http://localhost:5173/Menu');

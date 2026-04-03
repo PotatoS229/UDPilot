@@ -16,12 +16,14 @@ find_library(PCAPPP_LIB Pcap++ PATHS /usr/local/lib /usr/lib/x86_64-linux-gnu /u
 find_library(PACKETPP_LIB Packet++ PATHS /usr/local/lib /usr/lib/x86_64-linux-gnu /usr/lib)
 find_library(COMMONPP_LIB Common++ PATHS /usr/local/lib /usr/lib/x86_64-linux-gnu /usr/lib)
 find_library(PCAP_LIB pcap PATHS /usr/local/lib /usr/lib/x86_64-linux-gnu /usr/lib)
+find_library(LIBNETFILTER_QUEUE_LIB netfilter_queue PATHS /usr/lib/x86_64-linux-gnu /usr/lib)
 
 # Include directories
 include_directories(
     ./include
     .
     /usr/include/pcapplusplus
+    /usr/include/libnetfilter_queue
 )
 
 # Find all source files recursively
@@ -43,6 +45,8 @@ target_link_libraries(main
     ${COMMONPP_LIB}
     ${PCAP_LIB}
     pthread
+    ${LIBNETFILTER_QUEUE_LIB}
+
 )
 
 # If libraries not found by find_library, try direct linking
@@ -59,6 +63,7 @@ if(NOT PCAPPP_LIB OR NOT PACKETPP_LIB OR NOT COMMONPP_LIB)
 endif()
 
 # Show build information
-message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
-message(STATUS "Source files: ${SOURCES}")
-message(STATUS "Output directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}\n")
+message(STATUS "Source files: ${SOURCES}\n")
+message(STATUS "Output directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}\n")
+message(STATUS "${LIBNETFILTER_QUEUE_LIB}\n")

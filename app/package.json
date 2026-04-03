@@ -4,13 +4,14 @@
   "description": "",
   "license": "MIT",
   "author": "Maksaliev Artemiy",
-  "type": "commonjs",
+  "type": "module",
   "main": "main.js",
   "scripts": {
-    "start": "cd ./web && npm run dev & cd ./backend && npm run electron",
+    "start": "cd ./web && npm run dev & cd ./electron && npm run electron",
     "electron": "npx electron ./src/main.js",
     "build": "electron-builder",
-    "portable": "npx electron-builder --win portable"
+    "portable": "npx electron-builder --win portable",
+    "backend": ""
   },
   "build": {
     "appId": "UDPilot",
@@ -25,6 +26,8 @@
     "@types/uuid": "^10.0.0",
     "cypress": "^15.12.0",
     "d3": "^7.9.0",
+    "fastify": "^5.8.4",
+    "node-ipc": "^12.0.0",
     "react": "^19.2.0",
     "react-dom": "^19.2.0",
     "react-redux": "^9.2.0",
